@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{779CF934-CF25-4755-9BCD-65F8B79B76F0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Forme</RootNamespace>
+    <AssemblyName>Forme</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Communication.cs" />
+    <Compile Include="GUIController.cs" />
+    <Compile Include="Home.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Home.Designer.cs">
+      <DependentUpon>Home.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertGameStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertGameStep1.Designer.cs">
+      <DependentUpon>InsertGameStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertGameStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertGameStep2.Designer.cs">
+      <DependentUpon>InsertGameStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertPlayer.Designer.cs">
+      <DependentUpon>InsertPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertStat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertStat.Designer.cs">
+      <DependentUpon>InsertStat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsetTeam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsetTeam.Designer.cs">
+      <DependentUpon>InsetTeam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchGames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchGames.Designer.cs">
+      <DependentUpon>SearchGames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPlayersStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchPlayersStep1.Designer.cs">
+      <DependentUpon>SearchPlayersStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPlayersStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchPlayersStep2.Designer.cs">
+      <DependentUpon>SearchPlayersStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchStatsStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchStatsStep1.Designer.cs">
+      <DependentUpon>SearchStatsStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchStatsStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchStatsStep2.Designer.cs">
+      <DependentUpon>SearchStatsStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchTeamsStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchTeamsStep1.Designer.cs">
+      <DependentUpon>SearchTeamsStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchTeamsStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchTeamsStep2.Designer.cs">
+      <DependentUpon>SearchTeamsStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePlayerStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdatePlayerStep1.Designer.cs">
+      <DependentUpon>UpdatePlayerStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePlayerStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdatePlayerStep2.Designer.cs">
+      <DependentUpon>UpdatePlayerStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateTeamStep1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateTeamStep1.Designer.cs">
+      <DependentUpon>UpdateTeamStep1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateTeamStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateTeamStep2.Designer.cs">
+      <DependentUpon>UpdateTeamStep2.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertGameStep1.resx">
+      <DependentUpon>InsertGameStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertGameStep2.resx">
+      <DependentUpon>InsertGameStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertPlayer.resx">
+      <DependentUpon>InsertPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertStat.resx">
+      <DependentUpon>InsertStat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsetTeam.resx">
+      <DependentUpon>InsetTeam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SearchGames.resx">
+      <DependentUpon>SearchGames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchPlayersStep1.resx">
+      <DependentUpon>SearchPlayersStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchPlayersStep2.resx">
+      <DependentUpon>SearchPlayersStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchStatsStep1.resx">
+      <DependentUpon>SearchStatsStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchStatsStep2.resx">
+      <DependentUpon>SearchStatsStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchTeamsStep1.resx">
+      <DependentUpon>SearchTeamsStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchTeamsStep2.resx">
+      <DependentUpon>SearchTeamsStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdatePlayerStep1.resx">
+      <DependentUpon>UpdatePlayerStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdatePlayerStep2.resx">
+      <DependentUpon>UpdatePlayerStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTeamStep1.resx">
+      <DependentUpon>UpdateTeamStep1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTeamStep2.resx">
+      <DependentUpon>UpdateTeamStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{f27a4ddd-c2f9-4bba-9b41-30d6fea7904a}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

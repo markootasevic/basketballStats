@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="HomeTeamPts" Type="int" Nullable="false" />
+          <Property Name="GuestTeamPts" Type="int" Nullable="false" />
+          <Property Name="HomeTeamID" Type="int" Nullable="false" />
+          <Property Name="GuestTeamID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="CountyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaysFor">
+          <Key>
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="DateFrom" Type="date" Nullable="false" />
+          <Property Name="DateTo" Type="date" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="StatsID" />
+          </Key>
+          <Property Name="StatsID" Type="int" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="GameID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatsItem">
+          <Key>
+            <PropertyRef Name="StatsItemID" />
+          </Key>
+          <Property Name="StatsItemID" Type="int" Nullable="false" />
+          <Property Name="StatsID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Arena" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_game_guest_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="GuestTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_game_home_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="HomeTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_player_country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playsFor_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlaysFor" Type="Self.PlaysFor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PlaysFor">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playsFor_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="PlaysFor" Type="Self.PlaysFor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="PlaysFor">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stats_game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Stats" Type="Self.Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stats_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Stats" Type="Self.Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatsItem_Stats">
+          <End Role="Stats" Type="Self.Stats" Multiplicity="1" />
+          <End Role="StatsItem" Type="Self.StatsItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="StatsID" />
+            </Principal>
+            <Dependent Role="StatsItem">
+              <PropertyRef Name="StatsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbModelStoreContainer">
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaysFor" EntityType="Self.PlaysFor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stats" EntityType="Self.Stats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatsItem" EntityType="Self.StatsItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_game_guest_team" Association="Self.FK_game_guest_team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_game_home_team" Association="Self.FK_game_home_team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_player_country" Association="Self.FK_player_country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playsFor_player" Association="Self.FK_playsFor_player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlaysFor" EntitySet="PlaysFor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playsFor_team" Association="Self.FK_playsFor_team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="PlaysFor" EntitySet="PlaysFor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stats_game" Association="Self.FK_stats_game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stats_player" Association="Self.FK_stats_player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatsItem_Stats" Association="Self.FK_StatsItem_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="StatsItem" EntitySet="StatsItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Players" Relationship="Self.FK_player_country" FromRole="Country" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HomeTeamPts" Type="Int32" Nullable="false" />
+          <Property Name="GuestTeamPts" Type="Int32" Nullable="false" />
+          <Property Name="HomeTeamID" Type="Int32" Nullable="false" />
+          <Property Name="GuestTeamID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_game_guest_team" FromRole="Game" ToRole="Team" />
+          <NavigationProperty Name="Team1" Relationship="Self.FK_game_home_team" FromRole="Game" ToRole="Team" />
+          <NavigationProperty Name="Stats" Relationship="Self.FK_stats_game" FromRole="Game" ToRole="Stats" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Int32" Nullable="false" />
+          <Property Name="CountyID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_player_country" FromRole="Player" ToRole="Country" />
+          <NavigationProperty Name="PlaysFors" Relationship="Self.FK_playsFor_player" FromRole="Player" ToRole="PlaysFor" />
+          <NavigationProperty Name="Stats" Relationship="Self.FK_stats_player" FromRole="Player" ToRole="Stats" />
+        </EntityType>
+        <EntityType Name="PlaysFor">
+          <Key>
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateTo" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_playsFor_player" FromRole="PlaysFor" ToRole="Player" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_playsFor_team" FromRole="PlaysFor" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="StatsID" />
+          </Key>
+          <Property Name="StatsID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="GameID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_stats_game" FromRole="Stats" ToRole="Game" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_stats_player" FromRole="Stats" ToRole="Player" />
+          <NavigationProperty Name="StatsItems" Relationship="Self.FK_StatsItem_Stats" FromRole="Stats" ToRole="StatsItem" />
+        </EntityType>
+        <EntityType Name="StatsItem">
+          <Key>
+            <PropertyRef Name="StatsItemID" />
+          </Key>
+          <Property Name="StatsItemID" Type="Int32" Nullable="false" />
+          <Property Name="StatsID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stat" Relationship="Self.FK_StatsItem_Stats" FromRole="StatsItem" ToRole="Stats" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Arena" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Games" Relationship="Self.FK_game_guest_team" FromRole="Team" ToRole="Game" />
+          <NavigationProperty Name="Games1" Relationship="Self.FK_game_home_team" FromRole="Team" ToRole="Game" />
+          <NavigationProperty Name="PlaysFors" Relationship="Self.FK_playsFor_team" FromRole="Team" ToRole="PlaysFor" />
+        </EntityType>
+        <Association Name="FK_player_country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_game_guest_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="GuestTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_game_home_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="HomeTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stats_game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Stats" Type="Self.Stat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playsFor_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlaysFor" Type="Self.PlaysFor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PlaysFor">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stats_player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Stats" Type="Self.Stat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playsFor_team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="PlaysFor" Type="Self.PlaysFor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="PlaysFor">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatsItem_Stats">
+          <End Role="Stats" Type="Self.Stat" Multiplicity="1" />
+          <End Role="StatsItem" Type="Self.StatsItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="StatsID" />
+            </Principal>
+            <Dependent Role="StatsItem">
+              <PropertyRef Name="StatsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="basketballStatsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="PlaysFors" EntityType="Self.PlaysFor" />
+          <EntitySet Name="Stats" EntityType="Self.Stat" />
+          <EntitySet Name="StatsItems" EntityType="Self.StatsItem" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <AssociationSet Name="FK_player_country" Association="Self.FK_player_country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_game_guest_team" Association="Self.FK_game_guest_team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_game_home_team" Association="Self.FK_game_home_team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stats_game" Association="Self.FK_stats_game">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playsFor_player" Association="Self.FK_playsFor_player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="PlaysFor" EntitySet="PlaysFors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stats_player" Association="Self.FK_stats_player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playsFor_team" Association="Self.FK_playsFor_team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="PlaysFor" EntitySet="PlaysFors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatsItem_Stats" Association="Self.FK_StatsItem_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="StatsItem" EntitySet="StatsItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbModelStoreContainer" CdmEntityContainer="basketballStatsEntities">
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="DbModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="DbModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="HomeTeamPts" ColumnName="HomeTeamPts" />
+                <ScalarProperty Name="GuestTeamPts" ColumnName="GuestTeamPts" />
+                <ScalarProperty Name="HomeTeamID" ColumnName="HomeTeamID" />
+                <ScalarProperty Name="GuestTeamID" ColumnName="GuestTeamID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="DbModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaysFors">
+            <EntityTypeMapping TypeName="DbModel.PlaysFor">
+              <MappingFragment StoreEntitySet="PlaysFor">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stats">
+            <EntityTypeMapping TypeName="DbModel.Stat">
+              <MappingFragment StoreEntitySet="Stats">
+                <ScalarProperty Name="StatsID" ColumnName="StatsID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatsItems">
+            <EntityTypeMapping TypeName="DbModel.StatsItem">
+              <MappingFragment StoreEntitySet="StatsItem">
+                <ScalarProperty Name="StatsItemID" ColumnName="StatsItemID" />
+                <ScalarProperty Name="StatsID" ColumnName="StatsID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="DbModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Arena" ColumnName="Arena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
