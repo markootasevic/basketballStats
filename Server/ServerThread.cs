@@ -15,21 +15,21 @@ namespace Server
         BinaryFormatter formatter;
         NetworkStream stream;
         List<TransferClass> clients = new List<TransferClass>();
-
+        basketballStatsEntities db;
 
         public ServerThread(NetworkStream tok, List<TransferClass> klijenti)
         {
             formatter = new BinaryFormatter();
             this.stream = tok;
             this.clients = klijenti;
-            ThreadStart ts = obradaPodataka;
+            ThreadStart ts = processClient;
             Thread nit = new Thread(ts);
             nit.Start();
-
+            db = new basketballStatsEntities();
 
         }
 
-        private void obradaPodataka()
+        private void processClient()
         {
             try
             {
@@ -41,18 +41,32 @@ namespace Server
                     operation = transfer.Operation;
                     switch (transfer.Operation)
                     {
-                        case ((int)Operations.Sacuvaj_Mesto):
-                        //UbaciMesto ubaci = new UbaciMesto();
-                        //transfer.Uspesnost = ubaci.izvrsiSo(transfer.TransferObjekat as OpstiDomenskiObjekat);
-                        ////transfer.Signal = Broker.dajSesiju().ubaciMestoUBazu(transfer.TransferObjekat as Mesto);
-                        //formater.Serialize(tok, transfer);
-                        //break;
-                        case ((int)Operations.Vrati_Mesta):
-                        //VratiSvaMesta vrati = new VratiSvaMesta();
-                        //transfer.Uspesnost = vrati.izvrsiSo(transfer.TransferObjekat as OpstiDomenskiObjekat);
-                        //transfer.TransferObjekat = vrati.Lista;
-                        //formater.Serialize(tok, transfer);
-                        //break;
+                        case ((int)Operations.Save_player):
+                            List<Object> list = transfer.TransferObject as List<Object>;
+                            db.Players.Add(list[0] as Player);
+                            db.PlaysFors.Add(list[1] as PlaysFor);
+                            if(db.SaveChanges() != 0)
+                            {
+                                transfer.Success = true;
+                            } else
+                            {
+                                transfer.Success = false;
+                            }
+                            formatter.Serialize(stream, transfer);
+                            break;
+                        case ((int)Operations.Get_all_teams):
+                            //VratiSvaMesta vrati = new VratiSvaMesta();
+
+                            transfer.TransferObject = db.Teams.ToList();
+                            transfer.Success = true;
+                            formatter.Serialize(stream, transfer);
+                            break;
+                        case ((int)Operations.Get_all_countries):
+                            transfer.TransferObject = db.Countries.ToList();
+                            transfer.Success = true;
+                            formatter.Serialize(stream, transfer);
+                            break;
+
                         case ((int)Operations.Kraj):
                             //Console.WriteLine("Hvala na konekciji!");
                             //foreach (TransferKlasa t in klijenti)

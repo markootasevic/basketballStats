@@ -34,13 +34,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.txtCountry = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtDate = new System.Windows.Forms.TextBox();
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.txtWeight = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbTeam = new System.Windows.Forms.ComboBox();
+            this.cbCountry = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -105,13 +105,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtCountry
-            // 
-            this.txtCountry.Location = new System.Drawing.Point(111, 24);
-            this.txtCountry.Name = "txtCountry";
-            this.txtCountry.Size = new System.Drawing.Size(100, 20);
-            this.txtCountry.TabIndex = 6;
-            // 
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(124, 115);
@@ -157,18 +150,26 @@
             this.cbTeam.Size = new System.Drawing.Size(121, 21);
             this.cbTeam.TabIndex = 12;
             // 
+            // cbCountry
+            // 
+            this.cbCountry.FormattingEnabled = true;
+            this.cbCountry.Location = new System.Drawing.Point(111, 22);
+            this.cbCountry.Name = "cbCountry";
+            this.cbCountry.Size = new System.Drawing.Size(121, 21);
+            this.cbCountry.TabIndex = 13;
+            // 
             // InsertPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 466);
+            this.Controls.Add(this.cbCountry);
             this.Controls.Add(this.cbTeam);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtWeight);
             this.Controls.Add(this.txtHeight);
             this.Controls.Add(this.txtDate);
             this.Controls.Add(this.txtName);
-            this.Controls.Add(this.txtCountry);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -177,6 +178,7 @@
             this.Controls.Add(this.label1);
             this.Name = "InsertPlayer";
             this.Text = "Dodaj igraca";
+            this.Load += new System.EventHandler(this.InsertPlayer_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,13 +192,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtCountry;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtDate;
         private System.Windows.Forms.TextBox txtHeight;
         private System.Windows.Forms.TextBox txtWeight;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbTeam;
+        private System.Windows.Forms.ComboBox cbCountry;
     }
 }
 

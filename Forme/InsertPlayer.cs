@@ -16,7 +16,16 @@ namespace Forme
         GUIController gc = new GUIController();
         public InsertPlayer()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+                gc.connectToServer();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -35,7 +44,21 @@ namespace Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
-            gc.insertPlayer(txtCountry.Text, cbTeam.SelectedItem as Team, txtName.Text, txtDate.Text, txtHeight.Text, txtWeight.Text);
+            bool success = gc.insertPlayer(cbCountry.SelectedItem as Country, cbTeam.SelectedItem as Team, txtName.Text, txtDate.Text, txtHeight.Text, txtWeight.Text);
+            if(success)
+            {
+                MessageBox.Show("Uspesno ste ubacili igraca");
+            } else
+            {
+                MessageBox.Show("Doslo je do greske");
+            }
+        }
+
+        private void InsertPlayer_Load(object sender, EventArgs e)
+        {
+            cbTeam.DataSource = gc.getAllTeams();
+            cbCountry.DataSource = gc.getAllCountries();
+            this.Show();
         }
     }
 }

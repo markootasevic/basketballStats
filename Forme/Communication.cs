@@ -28,12 +28,12 @@ namespace Forme
             {
                 client = new TcpClient("127.0.0.1", 10000);
                 stream = client.GetStream();
-                TransferClass transfer = formatter.Deserialize(stream) as TransferClass;
-                if (transfer.Operation == (int)Operations.Kraj)
-                {
-                    return false;
-                }
-                numOfClients = transfer.Signal;
+                //TransferClass transfer = formatter.Deserialize(stream) as TransferClass;
+                //if (transfer.Operation == (int)Operations.Kraj)
+                //{
+                //    return false;
+                //}
+                //numOfClients = transfer.Signal;
                 return true;
             }
             catch
@@ -42,8 +42,31 @@ namespace Forme
             }
         }
 
+        public bool insertPlayer(Player player,PlaysFor playsFor)
+        {
+            List<Object> list = new List<Object>();
+            list.Add(player);
+            list.Add(playsFor);
+            TransferClass transfer = new TransferClass();
+            transfer.TransferObject = list;
+            transfer.Operation = (int)Operations.Save_player;
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            if (transfer.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
         //public int dodajMesto(Mesto m)
         //{
+
         //    TransferClass transfer = new TransferClass();
         //    transfer.Operation = (int)Operations.Sacuvaj_Mesto;
         //    transfer.TransferObject = m;
@@ -60,23 +83,48 @@ namespace Forme
         //    //return transfer.Signal;
         //}
 
-        //public List<OpstiDomenskiObjekat> vratiMesta()
-        //{
+        public List<Team> getAllTeams()
+        {
 
-        //    TransferClass transfer = new TransferClass();
-        //    transfer.Success = (int)Operations.Vrati_Mesta;
-        //    transfer.TransferObject = new Mesto();
-        //    formater.Serialize(tok, transfer);
-        //    transfer = formater.Deserialize(tok) as TransferClass;
-        //    if (transfer.Success)
-        //    {
-        //        return transfer.TransferObject as List<OpstiDomenskiObjekat>;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
+            TransferClass transfer = new TransferClass();
+            transfer.Operation = (int)Operations.Get_all_teams;
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            if (transfer.Success)
+            {
+                return transfer.TransferObject as List<Team>;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<Country> getAllCountries()
+        {
+
+            try
+            {
+                TransferClass transfer = new TransferClass();
+                transfer.Operation = (int)Operations.Get_all_countries;
+
+                formatter.Serialize(stream, transfer);
+                transfer = formatter.Deserialize(stream) as TransferClass;
+                if (transfer.Success)
+                {
+                    return transfer.TransferObject as List<Country>;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public void zatvori()
         {

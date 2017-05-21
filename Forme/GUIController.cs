@@ -12,7 +12,7 @@ namespace Forme
     {
         static Communication comm = new Communication();
 
-        public bool poveziSeSaServerom()
+        public bool connectToServer()
         {
             bool result = comm.connectToServer();
             if (result)
@@ -27,24 +27,38 @@ namespace Forme
             }
         }
 
-        public void insertPlayer (string country, Team team, string name, string dob, string height, string weight) 
+        public bool insertPlayer (Country country, Team team, string name, string dob, string height, string weight) 
         {
             Player p = new Player
             {
                 BirthDate = DateTime.Parse(dob),
-                Country = new Country
-                {
-                    CountryID = 1,
-                    Name = "Srb"
-                },
-                
+                CountyID = country.CountryID,
+                Height = Convert.ToInt32(height),
+                Weight = Convert.ToInt32(weight),
+                Name = name
             };
+            PlaysFor pf = new PlaysFor
+            {
+                DateFrom = DateTime.Now,
+                TeamID = team.TeamID
+            };
+            return comm.insertPlayer(p,pf);
+        }
+
+        public List<Team> getAllTeams()
+        {
+            return comm.getAllTeams();
+        }
+
+        public List<Country> getAllCountries()
+        {
+            return comm.getAllCountries();
         }
 
         //public void dodajMesto(TextBox txtNaziv, TextBox txtPttBroj)
         //{
         //    int broj = Convert.ToInt32(txtPttBroj.Text);
-        //    string naziv = txtNaziv.Text;
+        //    string naziv = txtNaziv.Te    xt;
         //    Mesto m = new Mesto();
         //    m.Naziv = naziv;
         //    m.PttBroj = broj;

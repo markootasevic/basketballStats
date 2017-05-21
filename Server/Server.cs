@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Domain;
 
 namespace Server
@@ -56,7 +52,7 @@ namespace Server
             {
                 Socket client = socket.Accept();
                 stream = new NetworkStream(client);
-                TransferClass transfer = new TransferClass();
+                //TransferClass transfer = new TransferClass();
                 //if (clients.Count == 2)
                 //{
                 //    transfer.Operation = (int)Operations.Kraj;
@@ -67,8 +63,8 @@ namespace Server
                 transferObject.TransferObject = client;
                 transferObject.Signal = counter;
                 clients.Add(transferObject);
-                transfer.Signal = counter;
-                formatter.Serialize(stream, transfer);
+                //transfer.Signal = counter;
+                //formatter.Serialize(stream, transfer);
                 counter++;
                 ServerThread nit = new ServerThread(stream, clients);
 
