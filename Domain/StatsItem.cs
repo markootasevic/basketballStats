@@ -11,7 +11,6 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    [Serializable]
     public partial class StatsItem
     {
         public int StatsItemID { get; set; }

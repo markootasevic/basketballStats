@@ -11,7 +11,6 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    [Serializable]
     public partial class Country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,9 +25,5 @@ namespace Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player> Players { get; set; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }
