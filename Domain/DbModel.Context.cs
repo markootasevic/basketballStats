@@ -18,6 +18,7 @@ namespace Domain
         public basketballStatsEntities()
             : base("name=basketballStatsEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
