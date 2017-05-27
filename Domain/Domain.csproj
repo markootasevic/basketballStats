@@ -87,6 +87,7 @@
     <Compile Include="Team.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransferClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DbModel.edmx">

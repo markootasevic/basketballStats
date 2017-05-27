@@ -12,7 +12,6 @@ namespace Forme
 {
     public partial class Home : Form
     {
-        Communication comm;
         GUIController gc = new GUIController();
         public Home()
         {
@@ -20,9 +19,8 @@ namespace Forme
         }
 
         private void connectToServer()
-        {
-            comm = new Communication();
-            if (!comm.connectToServer())
+        { 
+            if (!gc.connectToServer())
             {
                 Close();
             }
@@ -31,7 +29,21 @@ namespace Forme
         private void Home_Load(object sender, EventArgs e)
         {
             connectToServer();
-            label1.Text = comm.NumOfClients.ToString();
+        }
+
+        private void unosIgracaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new InsertPlayer(gc).Show();
+        }
+
+        private void unosTimaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new InsetTeam(gc).Show();
+        }
+
+        private void unosUtakmiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new InsertGameStep1(gc).Show();
         }
     }
 }

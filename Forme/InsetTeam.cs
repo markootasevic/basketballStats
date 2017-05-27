@@ -12,9 +12,25 @@ namespace Forme
 {
     public partial class InsetTeam : Form
     {
-        public InsetTeam()
+        GUIController gc;
+        public InsetTeam(GUIController gui)
         {
+            gc = gui;
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool success = gc.insertTeam(txtName.Text, txtArena.Text);
+
+            if (success)
+            {
+                MessageBox.Show("Uspesno ste ubacili tim");
+            }
+            else
+            {
+                MessageBox.Show("Doslo je do greske");
+            }
         }
     }
 }

@@ -8,11 +8,11 @@ using Domain;
 
 namespace Forme
 {
-    class GUIController
+    public class GUIController
     {
         static Communication comm = new Communication();
 
-        public bool poveziSeSaServerom()
+        public bool connectToServer()
         {
             bool result = comm.connectToServer();
             if (result)
@@ -27,24 +27,68 @@ namespace Forme
             }
         }
 
-        public void insertPlayer (string country, Team team, string name, string dob, string height, string weight) 
+        public bool insertPlayer(Country country, Team team, string name, string dob, string height, string weight)
         {
             Player p = new Player
             {
                 BirthDate = DateTime.Parse(dob),
-                Country = new Country
-                {
-                    CountryID = 1,
-                    Name = "Srb"
-                },
-                
+                CountyID = country.CountryID,
+                Height = Convert.ToInt32(height),
+                Weight = Convert.ToInt32(weight),
+                Name = name
             };
+            PlaysFor pf = new PlaysFor
+            {
+                DateFrom = DateTime.Now,
+                TeamID = team.TeamID
+            };
+            return comm.insertPlayer(p, pf);
+        }
+
+
+        public bool insertTeam(string name, string arena)
+        {
+            Team t = new Team
+            {
+                Name = name,
+                Arena = arena
+            };
+            return comm.insertTeam(t);
+        }
+
+
+        public bool insertGame(string homeTeamId, string guestTeamId, string ptsHome, string ptsGuest, string date)
+        {
+            Game g = new Game
+            {
+                Date = DateTime.Parse(date),
+                GuestTeamID = Int32.Parse(guestTeamId),
+                HomeTeamID = Int32.Parse(homeTeamId),
+                GuestTeamPts = Int32.Parse(ptsGuest),
+                HomeTeamPts = Int32.Parse(ptsHome)
+            };
+            return comm.insertGame(g);
+        }
+
+        public List<Team> getAllTeams()
+        {
+            return comm.getAllTeams();
+        }
+
+        public List<Country> getAllCountries()
+        {
+            return comm.getAllCountries();
+        }
+
+        public List<Player> getPlayerListForTeam(int teamId)
+        {
+            return comm.getPlayerListForTeam(teamId);
         }
 
         //public void dodajMesto(TextBox txtNaziv, TextBox txtPttBroj)
         //{
         //    int broj = Convert.ToInt32(txtPttBroj.Text);
-        //    string naziv = txtNaziv.Text;
+        //    string naziv = txtNaziv.Te    xt;
         //    Mesto m = new Mesto();
         //    m.Naziv = naziv;
         //    m.PttBroj = broj;

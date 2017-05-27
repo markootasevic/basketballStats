@@ -13,29 +13,44 @@ namespace Forme
 {
     public partial class InsertPlayer : Form
     {
-        GUIController gc = new GUIController();
+        public GUIController gc;
         public InsertPlayer()
         {
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        public InsertPlayer(GUIController gc)
         {
-            ///TOOD: skloni ove test podatke posle u ubaci lepo sve
-            List<Team> teamList = new List<Team>();
-
-            Team team1 = new Team
-            {
-                Arena = "arena1",
-                Name = "GSW",
-                TeamID = 1
-            };
-            cbTeam.DataSource = teamList;
+            this.gc = gc;
+            InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            gc.insertPlayer(txtCountry.Text, cbTeam.SelectedItem as Team, txtName.Text, txtDate.Text, txtHeight.Text, txtWeight.Text);
+            bool success = gc.insertPlayer(cbCountry.SelectedItem as Country, cbTeam.SelectedItem as Team, txtName.Text, txtDate.Text, txtHeight.Text, txtWeight.Text);
+            if (success)
+            {
+                MessageBox.Show("Uspesno ste ubacili igraca");
+            }
+            else
+            {
+                MessageBox.Show("Doslo je do greske");
+            }
+        }
+
+        private void InsertPlayer_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                cbTeam.DataSource = gc.getAllTeams();
+                cbCountry.DataSource = gc.getAllCountries();
+                this.Show();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

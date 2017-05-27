@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Domain;
 
 namespace Server
@@ -24,7 +20,7 @@ namespace Server
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //IPAddress adresa = IPAddress.Parse("127.0.0.1");
-            socket.Bind(new IPEndPoint(IPAddress.Any, 10000));
+            socket.Bind(new IPEndPoint(IPAddress.Any, 55555));
             Console.WriteLine("Server je uspesno startovan!");
             //Thread krajNit = new Thread(new ThreadStart(kraj));
             //krajNit.Start();
@@ -33,21 +29,6 @@ namespace Server
 
         }
 
-        //private void kraj()
-        //{
-        //    Console.WriteLine("Broj klijenta kojeg zelis da ugasis?");
-        //    string prihvati = Console.ReadLine();
-        //    int brojKlijenta = Convert.ToInt32(prihvati);
-        //    foreach (TransferClass t in klijenti)
-        //    {
-        //        if (t.Signal == brojKlijenta)
-        //        {
-        //            (t.TransferObject as Socket).Close();
-        //            klijenti.Remove(t);
-        //            break;
-        //        }
-        //    }
-        //}
 
         private void processClient()
         {
@@ -56,19 +37,10 @@ namespace Server
             {
                 Socket client = socket.Accept();
                 stream = new NetworkStream(client);
-                TransferClass transfer = new TransferClass();
-                //if (clients.Count == 2)
-                //{
-                //    transfer.Operation = (int)Operations.Kraj;
-                //    formatter.Serialize(stream, transfer);
-                //    continue;
-                //}
                 TransferClass transferObject = new TransferClass();
                 transferObject.TransferObject = client;
                 transferObject.Signal = counter;
                 clients.Add(transferObject);
-                transfer.Signal = counter;
-                formatter.Serialize(stream, transfer);
                 counter++;
                 ServerThread nit = new ServerThread(stream, clients);
 

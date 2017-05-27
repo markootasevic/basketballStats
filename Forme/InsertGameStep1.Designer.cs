@@ -157,6 +157,7 @@
             this.Controls.Add(this.label1);
             this.Name = "InsertGameStep1";
             this.Text = "Dodaj utakmicu";
+            this.Load += new System.EventHandler(this.InsertGameStep1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

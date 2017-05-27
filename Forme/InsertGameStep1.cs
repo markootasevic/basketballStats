@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +13,26 @@ namespace Forme
 {
     public partial class InsertGameStep1 : Form
     {
-        public InsertGameStep1()
+        GUIController gc;
+        public InsertGameStep1(GUIController gui)
         {
+            gc = gui;
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
+            new InsertGameStep2(gc, cbHomeTeam.SelectedItem as Team, cbAwayTeam.SelectedItem as Team, txtHomePts.Text, txtGuestPts.Text, txtDate.Text).Show();
+            
+        }
+
+        private void InsertGameStep1_Load(object sender, EventArgs e)
+        {
+            List<Team> teams = gc.getAllTeams();
+            List<Team> teams1 =new List<Team>(teams);
+            cbAwayTeam.DataSource = teams;
+            cbHomeTeam.DataSource = teams1;
         }
     }
 }
