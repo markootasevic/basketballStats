@@ -39,6 +39,7 @@ namespace Forme
             lblGuestTeam.Text = guestTeam.Name;
             cbHomePlayer.DataSource = gc.getPlayerListForTeam(homeTeam.TeamID);
             cbGuestPlayer.DataSource = gc.getPlayerListForTeam(guestTeam.TeamID);
+            List<Player> lista = gc.getPlayerListForTeam(guestTeam.TeamID);
             dgvHomePlayers.DataSource = homeTeamPlayers;
             dgvGuestPlayers.DataSource = guestTeamPlayers;
 
@@ -52,11 +53,24 @@ namespace Forme
             {
                 col.ReadOnly = true;
             }
+
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            homeTeamPlayers.Add(cbHomePlayer.SelectedItem as Player);
+            if (homeTeamPlayers.Contains(cbHomePlayer.SelectedItem as Player))
+            {
+                MessageBox.Show("Ne mozete dodati istog igraca 2 puta");
+            }
+            else
+            {
+                homeTeamPlayers.Add(cbHomePlayer.SelectedItem as Player);
+
+                dgvHomePlayers.Columns[dgvGuestPlayers.Columns.Count - 1].Visible = false;
+                dgvHomePlayers.Columns[dgvGuestPlayers.Columns.Count - 2].Visible = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -74,7 +88,17 @@ namespace Forme
 
         private void button3_Click(object sender, EventArgs e)
         {
-            guestTeamPlayers.Add(cbGuestPlayer.SelectedItem as Player);
+            if (guestTeamPlayers.Contains(cbGuestPlayer.SelectedItem as Player))
+            {
+                MessageBox.Show("Ne mozete dodati istog igraca 2 puta");
+            }
+            else
+            {
+                guestTeamPlayers.Add(cbGuestPlayer.SelectedItem as Player);
+
+                dgvGuestPlayers.Columns[dgvGuestPlayers.Columns.Count - 1].Visible = false;
+                dgvGuestPlayers.Columns[dgvGuestPlayers.Columns.Count - 2].Visible = false;
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -86,7 +110,21 @@ namespace Forme
             }
             catch (Exception ex)
             {
-             
+
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            bool res = gc.insertGame(homeTeam.TeamID.ToString(), guestTeam.TeamID.ToString(), ptsHome, ptsGuest, date, homeTeamPlayers.ToList(), guestTeamPlayers.ToList());
+            if(res)
+            {
+                MessageBox.Show("Uspesno ste ubacili utakmicu");
+            } else
+            {
+                MessageBox.Show("Nije uspelo ubacivanje utakmice");
+
             }
         }
     }

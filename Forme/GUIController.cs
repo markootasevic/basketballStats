@@ -57,7 +57,7 @@ namespace Forme
         }
 
 
-        public bool insertGame(string homeTeamId, string guestTeamId, string ptsHome, string ptsGuest, string date)
+        public bool insertGame(string homeTeamId, string guestTeamId, string ptsHome, string ptsGuest, string date, List<Player> homePlayers, List<Player> guestPlayers)
         {
             Game g = new Game
             {
@@ -67,7 +67,7 @@ namespace Forme
                 GuestTeamPts = Int32.Parse(ptsGuest),
                 HomeTeamPts = Int32.Parse(ptsHome)
             };
-            return comm.insertGame(g);
+            return comm.insertGame(g, homePlayers, guestPlayers);
         }
 
         public List<Team> getAllTeams()
@@ -84,6 +84,21 @@ namespace Forme
         {
             return comm.getPlayerListForTeam(teamId);
         }
+
+        //public bool insertGame(DateTime date, int homeTeamId, int homeTeamPts, int guestTeamId, int guestTeamPts)
+        //{
+        //    Game g = new Game
+        //    {
+        //        Date = date,
+        //        GuestTeamID = guestTeamId,
+        //        GuestTeamPts = guestTeamPts,
+        //        HomeTeamID = homeTeamId,
+        //        HomeTeamPts = homeTeamPts
+
+        //    };
+
+
+        //}
 
         //public void dodajMesto(TextBox txtNaziv, TextBox txtPttBroj)
         //{

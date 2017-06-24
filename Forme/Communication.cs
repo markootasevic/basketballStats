@@ -80,10 +80,14 @@ namespace Forme
             }
         }
 
-        public bool insertGame(Game game)
+        public bool insertGame(Game game, List<Player> homePlayers, List<Player> guestPlayers)
         {
+            List<Object> listForTransfer = new List<object>();
+            listForTransfer.Add(game);
+            listForTransfer.Add(homePlayers);
+            listForTransfer.Add(guestPlayers);
             TransferClass transfer = new TransferClass();
-            transfer.TransferObject = game;
+            transfer.TransferObject = listForTransfer;
             transfer.Operation = (int)Operations.Save_game;
             formatter.Serialize(stream, transfer);
             transfer = formatter.Deserialize(stream) as TransferClass;
@@ -164,6 +168,8 @@ namespace Forme
                 throw ex;
             }
         }
+
+
 
         //public void zatvori()
         //{

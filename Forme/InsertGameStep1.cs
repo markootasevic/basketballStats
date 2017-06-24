@@ -23,8 +23,16 @@ namespace Forme
         private void button1_Click(object sender, EventArgs e)
         {
 
-            new InsertGameStep2(gc, cbHomeTeam.SelectedItem as Team, cbAwayTeam.SelectedItem as Team, txtHomePts.Text, txtGuestPts.Text, txtDate.Text).Show();
-            
+            try
+            {
+                new InsertGameStep2(gc, cbHomeTeam.SelectedItem as Team, cbAwayTeam.SelectedItem as Team, txtHomePts.Text, txtGuestPts.Text, txtDate.Text).Show();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         private void InsertGameStep1_Load(object sender, EventArgs e)

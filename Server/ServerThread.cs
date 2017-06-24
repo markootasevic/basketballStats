@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Server
 {
@@ -99,11 +100,45 @@ namespace Server
 
 
                         case ((int)Operations.Save_game):
-
+                            transfer.Success = false;
                             using (basketballStatsEntities db = new basketballStatsEntities())
                             {
-                                Game game = transfer.TransferObject as Game;
+                                List<Object> objList = transfer.TransferObject as List<Object>;
+                                Game game = objList[0] as Game;
+                                List<Player> homePlayers = objList[1] as List<Player>;
+                                List<Player> guestPlayers = objList[2] as List<Player>;
                                 db.Games.Add(game);
+
+                                if (db.SaveChanges() != 0)
+                                {
+                                    transfer.Success = true;
+                                }
+                                else
+                                {
+                                    transfer.Success = false;
+                                    formatter.Serialize(stream, transfer);
+                                    break;
+                                }
+
+                                foreach (var home in homePlayers)
+                                {
+                                    Stat s = new Stat
+                                    {
+                                        GameID = game.GameID,
+                                        PlayerID = home.PlayerID,
+                                    };
+                                    db.Stats.Add(s);
+                                }
+
+                                foreach (var guest in guestPlayers)
+                                {
+                                    Stat s = new Stat
+                                    {
+                                        GameID = game.GameID,
+                                        PlayerID = guest.PlayerID,
+                                    };
+                                    db.Stats.Add(s);
+                                }
                                 if (db.SaveChanges() != 0)
                                 {
                                     transfer.Success = true;
@@ -112,8 +147,8 @@ namespace Server
                                 {
                                     transfer.Success = false;
                                 }
-                                formatter.Serialize(stream, transfer);
                             }
+                            formatter.Serialize(stream, transfer);
                             break;
 
 
@@ -130,7 +165,7 @@ namespace Server
                                     {
                                         continue;
                                     }
-                                    Player p = db.Players.FirstOrDefault(pl => pl.PlayerID == pf.PlayerID);
+                                    Player p = db.Players.Include("Country").FirstOrDefault(pl => pl.PlayerID == pf.PlayerID);
                                     result.Add(p);
                                 }
                                 transfer.TransferObject = result;
@@ -138,16 +173,9 @@ namespace Server
                                 formatter.Serialize(stream, transfer);
                             }
                             break;
+
+
                         case ((int)Operations.End):
-                            //Console.WriteLine("Hvala na konekciji!");
-                            //foreach (TransferKlasa t in klijenti)
-                            //{
-                            //    if (t.Signal == transfer.Signal)
-                            //    {
-                            //        klijenti.Remove(t);
-                            //        break;
-                            //    }
-                            //}
                             break;
 
                     }

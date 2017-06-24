@@ -133,21 +133,21 @@
             // 
             // dgvHomePlayers
             // 
+            this.dgvHomePlayers.AllowUserToAddRows = false;
             this.dgvHomePlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHomePlayers.Location = new System.Drawing.Point(12, 227);
             this.dgvHomePlayers.Name = "dgvHomePlayers";
             this.dgvHomePlayers.Size = new System.Drawing.Size(240, 150);
             this.dgvHomePlayers.TabIndex = 8;
-            this.dgvHomePlayers.AllowUserToAddRows = false;
             // 
             // dgvGuestPlayers
             // 
+            this.dgvGuestPlayers.AllowUserToAddRows = false;
             this.dgvGuestPlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGuestPlayers.Location = new System.Drawing.Point(398, 227);
             this.dgvGuestPlayers.Name = "dgvGuestPlayers";
             this.dgvGuestPlayers.Size = new System.Drawing.Size(240, 150);
             this.dgvGuestPlayers.TabIndex = 9;
-            this.dgvGuestPlayers.AllowUserToAddRows = false;
             // 
             // cbHomePlayer
             // 
@@ -173,6 +173,7 @@
             this.button5.TabIndex = 12;
             this.button5.Text = "Sacuvaj utakmicu";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // lblHomeTeam
             // 

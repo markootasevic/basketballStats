@@ -11,6 +11,7 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
+    
     public partial class Team
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,6 +32,5 @@ namespace Domain
         public virtual ICollection<Game> Games1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlaysFor> PlaysFors { get; set; }
-
     }
 }

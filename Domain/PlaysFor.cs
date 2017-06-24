@@ -11,6 +11,7 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
+    
     public partial class PlaysFor
     {
         public int TeamID { get; set; }
