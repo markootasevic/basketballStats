@@ -169,6 +169,56 @@ namespace Forme
             }
         }
 
+        public List<Game> getAllGames()
+        {
+            TransferClass transfer = new TransferClass();
+            transfer.Operation = (int)Operations.Get_all_games;
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            if (transfer.Success)
+            {
+                return transfer.TransferObject as List<Game>;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<Player> getPlayersForTeamForGame(Team team, Game game)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int) Operations.Get_Player_For_Team_For_Game,
+                TransferObject = new List<Object>
+                {
+                    team,game
+                }
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            if (transfer.Success)
+            {
+                return transfer.TransferObject as List<Player>;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool saveAllStats(List<StatsItem> list)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int) Operations.Save_all_stats,
+                TransferObject = list
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            return transfer.Success;
+        }
+
 
 
         //public void zatvori()

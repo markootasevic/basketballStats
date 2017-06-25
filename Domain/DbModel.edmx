@@ -56,7 +56,7 @@
           <Key>
             <PropertyRef Name="StatsItemID" />
           </Key>
-          <Property Name="StatsItemID" Type="int" Nullable="false" />
+          <Property Name="StatsItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatsID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="Value" Type="int" Nullable="false" />

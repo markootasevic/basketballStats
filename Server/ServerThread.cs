@@ -44,7 +44,7 @@ namespace Server
                     switch (transfer.Operation)
                     {
                         case ((int)Operations.Save_player):
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 db.Configuration.ProxyCreationEnabled = false;
                                 List<Object> list = transfer.TransferObject as List<Object>;
@@ -63,7 +63,7 @@ namespace Server
                             break;
                         case ((int)Operations.Get_all_teams):
                             //VratiSvaMesta vrati = new VratiSvaMesta();
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 db.Configuration.ProxyCreationEnabled = false;
                                 transfer.TransferObject = db.Teams.ToList();
@@ -72,7 +72,7 @@ namespace Server
                             }
                             break;
                         case ((int)Operations.Get_all_countries):
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 db.Configuration.ProxyCreationEnabled = false;
                                 transfer.TransferObject = db.Countries.ToList();
@@ -82,7 +82,7 @@ namespace Server
                             break;
 
                         case ((int)Operations.Save_Team):
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 Team team = transfer.TransferObject as Team;
                                 db.Teams.Add(team);
@@ -101,7 +101,7 @@ namespace Server
 
                         case ((int)Operations.Save_game):
                             transfer.Success = false;
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 List<Object> objList = transfer.TransferObject as List<Object>;
                                 Game game = objList[0] as Game;
@@ -153,15 +153,15 @@ namespace Server
 
 
                         case ((int)Operations.Get_players_for_team):
-                            using (basketballStatsEntities db = new basketballStatsEntities())
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 db.Configuration.ProxyCreationEnabled = false;
-                                int teamId =(int) transfer.TransferObject;
+                                int teamId = (int)transfer.TransferObject;
                                 List<PlaysFor> playsFor = db.PlaysFors.Where(pf => pf.TeamID == teamId).ToList();
                                 List<Player> result = new List<Player>();
-                                foreach(var pf in playsFor)
+                                foreach (var pf in playsFor)
                                 {
-                                    if(pf.DateTo != null && DateTime.Compare(DateTime.Now, pf.DateTo ?? DateTime.Now) >= 0)
+                                    if (pf.DateTo != null && DateTime.Compare(DateTime.Now, pf.DateTo ?? DateTime.Now) >= 0)
                                     {
                                         continue;
                                     }
@@ -174,11 +174,78 @@ namespace Server
                             }
                             break;
 
+                        case (int)Operations.Get_all_games:
+                            try
+                            {
+                                using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                                {
+                                    List<Game> gameList = db.Games.Include("Team").Include("Team1").ToList();
+                                    transfer.TransferObject = gameList;
+                                    transfer.Success = true;
+                                    formatter.Serialize(stream, transfer);
+                                }
+                            }
+                            catch (Exception e)
+                            {
 
+                                throw e;
+                            }
+                            break;
+
+                        case ((int)Operations.Get_Player_For_Team_For_Game):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                List<Object> objList = transfer.TransferObject as List<Object>;
+                                Team team = objList[0] as Team;
+                                Game game = objList[1] as Game;
+                                List<Player> res = new List<Player>();
+                                List<PlaysFor> playsFor = db.PlaysFors.Where(pf => pf.TeamID == team.TeamID && (pf.DateTo == null || DateTime.Compare(DateTime.Now, pf.DateTo ?? DateTime.Now) < 0)).ToList();
+                                foreach (var pf in playsFor)
+                                {
+                                    Player p = db.Players.Include("Stats").FirstOrDefault(pl => pl.PlayerID == pf.PlayerID);
+                                    Stat s = db.Stats.FirstOrDefault(st => st.PlayerID == p.PlayerID && st.GameID == game.GameID);
+                                    if(s != null)
+                                    {
+                                        res.Add(p);
+                                    }
+                                }
+                                transfer.TransferObject = res;
+                                transfer.Success = true;
+                                formatter.Serialize(stream, transfer);
+                            }
+                            break;
+
+                        case ((int)Operations.Save_all_stats):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                List<StatsItem> list = transfer.TransferObject as List<StatsItem>;
+                                foreach(var si in list)
+                                {
+                                    db.StatsItems.Add(si);
+                                }
+                                if (db.SaveChanges() != 0)
+                                {
+                                    transfer.Success = true;
+                                }
+                                else
+                                {
+                                    transfer.Success = false;
+                                }
+                                formatter.Serialize(stream, transfer);
+                            }
+
+
+                            break;
                         case ((int)Operations.End):
                             break;
 
                     }
+
+                    //***default case:
+                    //using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                    //{
+                    //}
+                    //break;
                 }
             }
             catch (Exception ex)

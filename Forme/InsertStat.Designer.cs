@@ -34,15 +34,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.dgvStatItems = new System.Windows.Forms.DataGridView();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.cbGame = new System.Windows.Forms.ComboBox();
             this.cbTeam = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cbPlayers = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStatItems)).BeginInit();
             this.SuspendLayout();
@@ -78,8 +78,8 @@
             // 
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.dgvStatItems);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtValue);
+            this.groupBox1.Controls.Add(this.txtName);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -100,28 +100,30 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "-";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // dgvStatItems
             // 
+            this.dgvStatItems.AllowUserToAddRows = false;
             this.dgvStatItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStatItems.Location = new System.Drawing.Point(10, 114);
             this.dgvStatItems.Name = "dgvStatItems";
             this.dgvStatItems.Size = new System.Drawing.Size(535, 138);
             this.dgvStatItems.TabIndex = 5;
             // 
-            // textBox2
+            // txtValue
             // 
-            this.textBox2.Location = new System.Drawing.Point(124, 73);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 4;
+            this.txtValue.Location = new System.Drawing.Point(124, 73);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(100, 20);
+            this.txtValue.TabIndex = 4;
             // 
-            // textBox1
+            // txtName
             // 
-            this.textBox1.Location = new System.Drawing.Point(124, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.txtName.Location = new System.Drawing.Point(124, 29);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(100, 20);
+            this.txtName.TabIndex = 3;
             // 
             // button1
             // 
@@ -131,6 +133,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Dodaj stavku";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label6
             // 
@@ -158,6 +161,7 @@
             this.button2.TabIndex = 5;
             this.button2.Text = "Sacuvaj sve stavke";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // cbGame
             // 
@@ -166,6 +170,7 @@
             this.cbGame.Name = "cbGame";
             this.cbGame.Size = new System.Drawing.Size(121, 21);
             this.cbGame.TabIndex = 6;
+            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
             // 
             // cbTeam
             // 
@@ -174,21 +179,22 @@
             this.cbTeam.Name = "cbTeam";
             this.cbTeam.Size = new System.Drawing.Size(121, 21);
             this.cbTeam.TabIndex = 7;
+            this.cbTeam.SelectedIndexChanged += new System.EventHandler(this.cbTeam_SelectedIndexChanged);
             // 
-            // comboBox3
+            // cbPlayers
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(140, 128);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 8;
+            this.cbPlayers.FormattingEnabled = true;
+            this.cbPlayers.Location = new System.Drawing.Point(140, 128);
+            this.cbPlayers.Name = "cbPlayers";
+            this.cbPlayers.Size = new System.Drawing.Size(121, 21);
+            this.cbPlayers.TabIndex = 8;
             // 
             // cbPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 491);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.cbPlayers);
             this.Controls.Add(this.cbTeam);
             this.Controls.Add(this.cbGame);
             this.Controls.Add(this.button2);
@@ -198,6 +204,7 @@
             this.Controls.Add(this.label1);
             this.Name = "cbPlayer";
             this.Text = "Dodaj statistiku";
+            this.Load += new System.EventHandler(this.cbPlayer_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStatItems)).EndInit();
@@ -213,8 +220,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvStatItems;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -222,6 +229,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox cbGame;
         private System.Windows.Forms.ComboBox cbTeam;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cbPlayers;
     }
 }

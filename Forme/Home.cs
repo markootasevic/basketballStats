@@ -45,5 +45,10 @@ namespace Forme
         {
             new InsertGameStep1(gc).Show();
         }
+
+        private void unosStatistikeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new cbPlayer(gc).Show();
+        }
     }
 }

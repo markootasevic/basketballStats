@@ -85,53 +85,68 @@ namespace Forme
             return comm.getPlayerListForTeam(teamId);
         }
 
-        //public bool insertGame(DateTime date, int homeTeamId, int homeTeamPts, int guestTeamId, int guestTeamPts)
-        //{
-        //    Game g = new Game
-        //    {
-        //        Date = date,
-        //        GuestTeamID = guestTeamId,
-        //        GuestTeamPts = guestTeamPts,
-        //        HomeTeamID = homeTeamId,
-        //        HomeTeamPts = homeTeamPts
+        public List<Game> getAllGames()
+        {
+            return comm.getAllGames();
+        }
 
-        //    };
+        public List<Player> getPlayersForTeamForGame(Team team, Game game)
+        {
+            return comm.getPlayersForTeamForGame(team, game);
+        }
+
+        public bool saveAllStats(List<StatsItem> list)
+        {
+            return comm.saveAllStats(list);
+        }
+
+            //public bool insertGame(DateTime date, int homeTeamId, int homeTeamPts, int guestTeamId, int guestTeamPts)
+            //{
+            //    Game g = new Game
+            //    {
+            //        Date = date,
+            //        GuestTeamID = guestTeamId,
+            //        GuestTeamPts = guestTeamPts,
+            //        HomeTeamID = homeTeamId,
+            //        HomeTeamPts = homeTeamPts
+
+            //    };
 
 
-        //}
+            //}
 
-        //public void dodajMesto(TextBox txtNaziv, TextBox txtPttBroj)
-        //{
-        //    int broj = Convert.ToInt32(txtPttBroj.Text);
-        //    string naziv = txtNaziv.Te    xt;
-        //    Mesto m = new Mesto();
-        //    m.Naziv = naziv;
-        //    m.PttBroj = broj;
-        //    try
-        //    {
-        //        if (comm.dodajMesto(m) == 1)
-        //        {
-        //            MessageBox.Show("Uspesno ste ubacili mesto!");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        return;
-        //    }
-        //}
+            //public void dodajMesto(TextBox txtNaziv, TextBox txtPttBroj)
+            //{
+            //    int broj = Convert.ToInt32(txtPttBroj.Text);
+            //    string naziv = txtNaziv.Te    xt;
+            //    Mesto m = new Mesto();
+            //    m.Naziv = naziv;
+            //    m.PttBroj = broj;
+            //    try
+            //    {
+            //        if (comm.dodajMesto(m) == 1)
+            //        {
+            //            MessageBox.Show("Uspesno ste ubacili mesto!");
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message);
+            //        return;
+            //    }
+            //}
 
-        //public void vratiMesta(ComboBox mesta)
-        //{
-        //    mesta.DataSource = comm.vratiMesta();
-        //}
+            //public void vratiMesta(ComboBox mesta)
+            //{
+            //    mesta.DataSource = comm.vratiMesta();
+            //}
 
-        //public void vratiMestaTabela(DataGridView mesta)
-        //{
-        //    List<OpstiDomenskiObjekat> mestaOpsta = comm.vratiMesta();
-        //    //mesta.DataSource = k.vratiMesta();
-        //    List<Mesto> mestaTabela = mestaOpsta.OfType<Mesto>().ToList<Mesto>();
-        //    mesta.DataSource = mestaTabela;
-        //}
-    }
+            //public void vratiMestaTabela(DataGridView mesta)
+            //{
+            //    List<OpstiDomenskiObjekat> mestaOpsta = comm.vratiMesta();
+            //    //mesta.DataSource = k.vratiMesta();
+            //    List<Mesto> mestaTabela = mestaOpsta.OfType<Mesto>().ToList<Mesto>();
+            //    mesta.DataSource = mestaTabela;
+            //}
+        }
 }

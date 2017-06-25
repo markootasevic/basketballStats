@@ -131,6 +131,7 @@
             this.unosStatistikeToolStripMenuItem.Name = "unosStatistikeToolStripMenuItem";
             this.unosStatistikeToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.unosStatistikeToolStripMenuItem.Text = "Unos statistike";
+            this.unosStatistikeToolStripMenuItem.Click += new System.EventHandler(this.unosStatistikeToolStripMenuItem_Click);
             // 
             // pretragaStatistikeToolStripMenuItem
             // 

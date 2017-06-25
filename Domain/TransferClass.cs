@@ -44,6 +44,15 @@ namespace Domain
 
     public enum Operations
     {
-        Save_player = 1, Get_all_teams, Get_all_countries, Save_Team, Save_game, Get_players_for_team ,End
+        Save_player = 1,
+        Get_all_teams,
+        Get_all_countries,
+        Save_Team,
+        Save_game,
+        Get_players_for_team,
+        Get_all_games,
+        Get_Player_For_Team_For_Game,
+        Save_all_stats,
+        End
     };
 }
