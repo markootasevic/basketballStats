@@ -69,7 +69,7 @@
             this.txtName.Location = new System.Drawing.Point(89, 29);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(100, 20);
+            this.txtName.Size = new System.Drawing.Size(141, 20);
             this.txtName.TabIndex = 3;
             // 
             // txtArena
@@ -77,7 +77,7 @@
             this.txtArena.Location = new System.Drawing.Point(89, 83);
             this.txtArena.Name = "txtArena";
             this.txtArena.ReadOnly = true;
-            this.txtArena.Size = new System.Drawing.Size(100, 20);
+            this.txtArena.Size = new System.Drawing.Size(141, 20);
             this.txtArena.TabIndex = 4;
             // 
             // dgvPlayers
@@ -85,14 +85,14 @@
             this.dgvPlayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPlayers.Location = new System.Drawing.Point(77, 143);
             this.dgvPlayers.Name = "dgvPlayers";
-            this.dgvPlayers.Size = new System.Drawing.Size(383, 242);
+            this.dgvPlayers.Size = new System.Drawing.Size(153, 242);
             this.dgvPlayers.TabIndex = 5;
             // 
             // SearchTeamsStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 409);
+            this.ClientSize = new System.Drawing.Size(296, 409);
             this.Controls.Add(this.dgvPlayers);
             this.Controls.Add(this.txtArena);
             this.Controls.Add(this.txtName);
@@ -101,6 +101,7 @@
             this.Controls.Add(this.label1);
             this.Name = "SearchTeamsStep2";
             this.Text = "Pretrazi timove";
+            this.Load += new System.EventHandler(this.SearchTeamsStep2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlayers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

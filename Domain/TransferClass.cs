@@ -53,6 +53,10 @@ namespace Domain
         Get_all_games,
         Get_Player_For_Team_For_Game,
         Save_all_stats,
+        Search_player,
+        Search_games,
+        Search_stats,
+        Search_teams,
         End
     };
 }

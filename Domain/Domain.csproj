@@ -71,6 +71,7 @@
     <Compile Include="Game.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GameFilter.cs" />
     <Compile Include="OverrideSettings.cs" />
     <Compile Include="Player.cs">
       <DependentUpon>DbModel.tt</DependentUpon>

@@ -50,5 +50,25 @@ namespace Forme
         {
             new cbPlayer(gc).Show();
         }
+
+        private void pretragaIgracaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SearchPlayersStep1(gc).Show();
+        }
+
+        private void pretragaUtakmiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SearchGames(gc).Show();
+        }
+
+        private void pretragaStatistikeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SearchStatsStep1(gc).Show();
+        }
+
+        private void pregragaTimovaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SearchTeamsStep1(gc).Show();
+        }
     }
 }

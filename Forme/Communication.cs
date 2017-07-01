@@ -219,7 +219,53 @@ namespace Forme
             return transfer.Success;
         }
 
+        public List<Player> searchPlayer(string name)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int)Operations.Search_player,
+                TransferObject = name
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            return transfer.TransferObject as List<Player>;
+        }
 
+        public List<Game> searchGames(GameFilter gf)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int) Operations.Search_games,
+                TransferObject = gf
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            return transfer.TransferObject as List<Game>;
+        }
+
+        public List<Stat> searchStats(Player p)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int)Operations.Search_stats,
+                TransferObject = p
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            return transfer.TransferObject as List<Stat>;
+        }
+
+        public List<Team> searchTeams(string name)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int)Operations.Search_teams,
+                TransferObject = name
+            };
+            formatter.Serialize(stream, transfer);
+            transfer = formatter.Deserialize(stream) as TransferClass;
+            return transfer.TransferObject as List<Team>;
+        }
 
         //public void zatvori()
         //{

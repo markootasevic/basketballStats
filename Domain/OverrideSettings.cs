@@ -40,7 +40,18 @@ namespace Domain
             return Name;
         }
     }
-    [Serializable] partial class PlaysFor { }
+    [Serializable] partial class PlaysFor {
+        public override string ToString()
+        {
+            if(Team != null)
+            {
+                return Team.Name;
+            } else
+            {
+                return "";
+            }
+        }
+    }
     [Serializable] partial class Stat { }
     [Serializable]
     partial class StatsItem

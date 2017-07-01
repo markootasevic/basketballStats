@@ -30,13 +30,11 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPlayer = new System.Windows.Forms.TextBox();
             this.txtGame = new System.Windows.Forms.TextBox();
-            this.txtScore = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvStatItems = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatItems)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -56,15 +54,6 @@
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Utakmica";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(225, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Rezultat";
             // 
             // label4
             // 
@@ -88,42 +77,33 @@
             this.txtGame.Location = new System.Drawing.Point(94, 88);
             this.txtGame.Name = "txtGame";
             this.txtGame.ReadOnly = true;
-            this.txtGame.Size = new System.Drawing.Size(100, 20);
+            this.txtGame.Size = new System.Drawing.Size(243, 20);
             this.txtGame.TabIndex = 5;
             // 
-            // txtScore
+            // dgvStatItems
             // 
-            this.txtScore.Location = new System.Drawing.Point(290, 91);
-            this.txtScore.Name = "txtScore";
-            this.txtScore.ReadOnly = true;
-            this.txtScore.Size = new System.Drawing.Size(100, 20);
-            this.txtScore.TabIndex = 6;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(129, 176);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(453, 213);
-            this.dataGridView1.TabIndex = 7;
+            this.dgvStatItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStatItems.Location = new System.Drawing.Point(12, 215);
+            this.dgvStatItems.Name = "dgvStatItems";
+            this.dgvStatItems.ReadOnly = true;
+            this.dgvStatItems.Size = new System.Drawing.Size(312, 213);
+            this.dgvStatItems.TabIndex = 7;
             // 
             // SearchStatsStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 463);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.txtScore);
+            this.ClientSize = new System.Drawing.Size(352, 463);
+            this.Controls.Add(this.dgvStatItems);
             this.Controls.Add(this.txtGame);
             this.Controls.Add(this.txtPlayer);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "SearchStatsStep2";
             this.Text = "Pretrazi statistike";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.SearchStatsStep2_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStatItems)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,11 +113,9 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPlayer;
         private System.Windows.Forms.TextBox txtGame;
-        private System.Windows.Forms.TextBox txtScore;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvStatItems;
     }
 }

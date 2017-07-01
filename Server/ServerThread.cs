@@ -199,7 +199,7 @@ namespace Server
                                 Team team = objList[0] as Team;
                                 Game game = objList[1] as Game;
                                 List<Player> res = new List<Player>();
-                                List<PlaysFor> playsFor = db.PlaysFors.Where(pf => pf.TeamID == team.TeamID && (pf.DateTo == null || DateTime.Compare(DateTime.Now, pf.DateTo ?? DateTime.Now) < 0)).ToList();
+                                List<PlaysFor> playsFor = db.PlaysFors.Include("Country").Where(pf => pf.TeamID == team.TeamID && (pf.DateTo == null || DateTime.Compare(DateTime.Now, pf.DateTo ?? DateTime.Now) < 0)).ToList();
                                 foreach (var pf in playsFor)
                                 {
                                     Player p = db.Players.Include("Stats").FirstOrDefault(pl => pl.PlayerID == pf.PlayerID);
@@ -233,7 +233,98 @@ namespace Server
                                 }
                                 formatter.Serialize(stream, transfer);
                             }
+                            break;
 
+                        case ((int) Operations.Search_player):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                string name = transfer.TransferObject as string;
+                                List<Player> players = db.Players.Include("Country").Include("PlaysFors").Where(p => p.Name.Contains(name)).ToList();
+                                for (int i = 0; i < players.Count; i++)
+                                {
+                                    int pId = players[i].PlayerID;
+                                    List<PlaysFor> pf = db.PlaysFors.Include("Team").Where(p => p.PlayerID == pId).ToList();
+                                    players[i].PlaysFors = pf;
+                                }
+                                transfer.TransferObject = players;
+                                formatter.Serialize(stream, transfer);
+                            }
+                            break;
+
+                        case ((int)Operations.Search_games):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                GameFilter gf = transfer.TransferObject as GameFilter;
+                                List<Game> games = db.Games.Include("Team").Include("Team1").ToList();
+                                if(gf.DateFrom != null)
+                                {
+                                    DateTime date = DateTime.Parse(gf.DateFrom.ToString());
+                                    games = games.Where(g => DateTime.Compare(g.Date, date) >= 0).ToList();
+                                }
+                                if(gf.DateTo != null)
+                                {
+                                    DateTime date = DateTime.Parse(gf.DateTo.ToString());
+                                    games = games.Where(g => DateTime.Compare(g.Date, date) <= 0).ToList();
+                                }
+                                if(gf.AllTeams != null)
+                                {
+                                    games = games.Where(g => g.HomeTeamID == gf.AllTeams.TeamID || g.GuestTeamID == gf.AllTeams.TeamID).ToList();
+                                } else
+                                {
+                                    if(gf.HomeTeam != null)
+                                    {
+                                        games = games.Where(g => g.HomeTeamID == gf.HomeTeam.TeamID).ToList();
+                                    }
+                                    if(gf.GuestTeam != null)
+                                    {
+                                        games = games.Where(g => g.GuestTeamID == gf.GuestTeam.TeamID).ToList();
+                                    }
+                                }
+
+                                transfer.TransferObject = games;
+                                formatter.Serialize(stream, transfer);
+                            }
+                                break;
+
+                        case ((int)Operations.Search_stats):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                Player player = transfer.TransferObject as Player;
+                                List<Stat> statsList= db.Stats.Include("Game").Include("Player").Include("StatsItems").Where(s => s.PlayerID == player.PlayerID).ToList();
+                                foreach(var stat in statsList)
+                                {
+                                    Game game = db.Games.Include("Team1").Include("Team").FirstOrDefault(g => g.GameID == stat.GameID);
+                                    stat.Game = game;
+                                }
+                                transfer.TransferObject = statsList;
+                                formatter.Serialize(stream, transfer);
+
+                            }
+
+                            break;
+
+                        case ((int)Operations.Search_teams):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                string name = transfer.TransferObject as string;
+                                List<Team> teamList = db.Teams.Include("PlaysFors").Where(t => t.Name.ToLower().Contains(name.ToLower())).ToList();
+                                foreach (var team in teamList)
+                                {
+                                    team.PlaysFors = new List<PlaysFor>();
+                                    List<PlaysFor> pf = db.PlaysFors.Include("Player").Where(p => p.TeamID == team.TeamID).ToList();
+                                    foreach (var p in pf)
+                                    {
+                                        if (p.DateTo != null && DateTime.Compare(DateTime.Now, p.DateTo ?? DateTime.Now) >= 0)
+                                        {
+                                            continue;
+                                        }
+                                        team.PlaysFors.Add(p);
+                                    }
+                                    team.PlaysFors = pf;
+                                }
+                                transfer.TransferObject = teamList;
+                                formatter.Serialize(stream, transfer);
+                            }
 
                             break;
                         case ((int)Operations.End):

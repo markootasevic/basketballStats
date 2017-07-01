@@ -87,6 +87,7 @@
             this.pretragaIgracaToolStripMenuItem.Name = "pretragaIgracaToolStripMenuItem";
             this.pretragaIgracaToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.pretragaIgracaToolStripMenuItem.Text = "Pretraga igraca";
+            this.pretragaIgracaToolStripMenuItem.Click += new System.EventHandler(this.pretragaIgracaToolStripMenuItem_Click);
             // 
             // timToolStripMenuItem
             // 
@@ -116,6 +117,7 @@
             this.pregragaTimovaToolStripMenuItem.Name = "pregragaTimovaToolStripMenuItem";
             this.pregragaTimovaToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.pregragaTimovaToolStripMenuItem.Text = "Pregraga timova";
+            this.pregragaTimovaToolStripMenuItem.Click += new System.EventHandler(this.pregragaTimovaToolStripMenuItem_Click);
             // 
             // statistikaToolStripMenuItem
             // 
@@ -138,6 +140,7 @@
             this.pretragaStatistikeToolStripMenuItem.Name = "pretragaStatistikeToolStripMenuItem";
             this.pretragaStatistikeToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.pretragaStatistikeToolStripMenuItem.Text = "Pretraga statistike";
+            this.pretragaStatistikeToolStripMenuItem.Click += new System.EventHandler(this.pretragaStatistikeToolStripMenuItem_Click);
             // 
             // utakmicaToolStripMenuItem
             // 
@@ -160,6 +163,7 @@
             this.pretragaUtakmiceToolStripMenuItem.Name = "pretragaUtakmiceToolStripMenuItem";
             this.pretragaUtakmiceToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.pretragaUtakmiceToolStripMenuItem.Text = "Pretraga utakmice";
+            this.pretragaUtakmiceToolStripMenuItem.Click += new System.EventHandler(this.pretragaUtakmiceToolStripMenuItem_Click);
             // 
             // Home
             // 
