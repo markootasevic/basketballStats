@@ -132,6 +132,15 @@ namespace Forme
             return comm.searchTeams(name);
         }
 
+        public void updateTeam(Team t)
+        {
+            comm.updateTeam(t);
+        }
+
+        public void updatePlayer(Player p)
+        {
+            comm.updatePlayer(p);
+        }
         //public bool insertGame(DateTime date, int homeTeamId, int homeTeamPts, int guestTeamId, int guestTeamPts)
         //{
         //    Game g = new Game

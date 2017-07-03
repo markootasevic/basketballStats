@@ -149,6 +149,7 @@
             this.button1.TabIndex = 12;
             this.button1.Text = "Sacuvaj izmene";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // UpdatePlayerStep2
             // 
@@ -170,6 +171,7 @@
             this.Controls.Add(this.label1);
             this.Name = "UpdatePlayerStep2";
             this.Text = "Izmeni igraca";
+            this.Load += new System.EventHandler(this.UpdatePlayerStep2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

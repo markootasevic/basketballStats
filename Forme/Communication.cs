@@ -267,6 +267,28 @@ namespace Forme
             return transfer.TransferObject as List<Team>;
         }
 
+        public void updateTeam(Team t)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int)Operations.Update_team,
+                TransferObject = t
+            };
+            formatter.Serialize(stream, transfer);
+            //transfer = formatter.Deserialize(stream) as TransferClass;
+        }
+
+        public void updatePlayer(Player p)
+        {
+            TransferClass transfer = new TransferClass
+            {
+                Operation = (int)Operations.Update_player,
+                TransferObject = p
+            };
+            formatter.Serialize(stream, transfer);
+            //transfer = formatter.Deserialize(stream) as TransferClass;
+        }
+
         //public void zatvori()
         //{
         //    TransferClass transfer = new TransferClass();

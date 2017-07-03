@@ -52,6 +52,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Izmeni";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // cbTeams
             // 
@@ -71,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Name = "UpdateTeamStep1";
             this.Text = "Izmeni tim";
+            this.Load += new System.EventHandler(this.UpdateTeamStep1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -70,5 +70,15 @@ namespace Forme
         {
             new SearchTeamsStep1(gc).Show();
         }
+
+        private void izmeniTimToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new UpdateTeamStep1(gc).Show();
+        }
+
+        private void izmenaIgracaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new UpdatePlayerStep1(gc).Show();
+        }
     }
 }

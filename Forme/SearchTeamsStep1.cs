@@ -22,6 +22,11 @@ namespace Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(String.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Morate uneti kriterijum pretrage");
+                return;
+            }
             dgvTeam.DataSource = gc.searchTeams(txtName.Text);
             for (int i = 0; i < dgvTeam.Columns.Count; i++)
             {

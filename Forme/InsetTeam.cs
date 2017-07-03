@@ -21,6 +21,10 @@ namespace Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(!validateFields())
+            {
+                return;
+            }
             bool success = gc.insertTeam(txtName.Text, txtArena.Text);
 
             if (success)
@@ -31,6 +35,28 @@ namespace Forme
             {
                 MessageBox.Show("Doslo je do greske");
             }
+        }
+
+        private bool validateFields()
+        {
+            bool valid = false;
+            string errMsg = "";
+            if(String.IsNullOrWhiteSpace(txtArena.Text))
+            {
+                errMsg += "Morate uneti naziv arene" + '\n';
+                valid = false;
+            }
+            if (String.IsNullOrWhiteSpace(txtName.Text))
+            {
+                errMsg += "Morate uneti naziv tima" + '\n';
+                valid = false;
+            }
+            if(!valid)
+            {
+                MessageBox.Show(errMsg);
+            }
+            return valid;
+
         }
     }
 }

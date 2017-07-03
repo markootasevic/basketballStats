@@ -45,7 +45,11 @@ namespace Forme
         {
             try
             {
-
+                if(String.IsNullOrWhiteSpace(txtSearch.Text))
+                {
+                    MessageBox.Show("Morate uneti kriterijum pretrage");
+                    return;
+                }
                 Player p = dgvFoundPlayers.SelectedRows[0].DataBoundItem as Player;
                 new SearchPlayersStep2(p).Show();
             }

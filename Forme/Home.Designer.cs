@@ -81,6 +81,7 @@
             this.izmenaIgracaToolStripMenuItem.Name = "izmenaIgracaToolStripMenuItem";
             this.izmenaIgracaToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.izmenaIgracaToolStripMenuItem.Text = "Izmena igraca";
+            this.izmenaIgracaToolStripMenuItem.Click += new System.EventHandler(this.izmenaIgracaToolStripMenuItem_Click);
             // 
             // pretragaIgracaToolStripMenuItem
             // 
@@ -111,6 +112,7 @@
             this.izmeniTimToolStripMenuItem.Name = "izmeniTimToolStripMenuItem";
             this.izmeniTimToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.izmeniTimToolStripMenuItem.Text = "Izmeni tim";
+            this.izmeniTimToolStripMenuItem.Click += new System.EventHandler(this.izmeniTimToolStripMenuItem_Click);
             // 
             // pregragaTimovaToolStripMenuItem
             // 

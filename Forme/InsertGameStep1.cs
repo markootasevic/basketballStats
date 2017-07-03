@@ -25,6 +25,10 @@ namespace Forme
 
             try
             {
+                if(!validateFileds())
+                {
+                    return;
+                }
                 new InsertGameStep2(gc, cbHomeTeam.SelectedItem as Team, cbAwayTeam.SelectedItem as Team, txtHomePts.Text, txtGuestPts.Text, txtDate.Text).Show();
 
             }
@@ -33,6 +37,37 @@ namespace Forme
 
                 throw ex;
             }
+        }
+
+        private bool validateFileds()
+        {
+            string errMsg = "";
+            bool valid = true;
+            if(String.IsNullOrWhiteSpace(txtDate.Text))
+            {
+                errMsg += "Morate uneti datum " + '\n';
+                valid = false;
+            }
+            if (String.IsNullOrWhiteSpace(txtGuestPts.Text))
+            {
+                errMsg += "Morate uneti broj poena gostiju" + '\n';
+                valid = false;
+            }
+            if (String.IsNullOrWhiteSpace(txtHomePts.Text))
+            {
+                errMsg += "Morate uneti broj poena domacih" + '\n';
+                valid = false;
+            }
+            if(cbAwayTeam.SelectedItem as Team == cbHomeTeam.SelectedItem as Team)
+            {
+                errMsg += "Domaci i gostujuci ne mogu biti isti" + '\n';
+                valid = false;
+            }
+            if(!valid)
+            {
+                MessageBox.Show(errMsg);
+            }
+            return valid;
         }
 
         private void InsertGameStep1_Load(object sender, EventArgs e)

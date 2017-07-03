@@ -7,14 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Domain;
 
 namespace Forme
 {
     public partial class UpdateTeamStep1 : Form
     {
-        public UpdateTeamStep1()
+        GUIController gc;
+        public UpdateTeamStep1(GUIController g)
         {
+            gc = g;
             InitializeComponent();
+        }
+
+        private void UpdateTeamStep1_Load(object sender, EventArgs e)
+        {
+            cbTeams.DataSource = gc.getAllTeams();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new UpdateTeamStep2(cbTeams.SelectedItem as Team, gc).Show();
         }
     }
 }

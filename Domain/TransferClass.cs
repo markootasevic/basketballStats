@@ -57,6 +57,8 @@ namespace Domain
         Search_games,
         Search_stats,
         Search_teams,
+        Update_team,
+        Update_player,
         End
     };
 }

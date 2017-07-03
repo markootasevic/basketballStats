@@ -69,6 +69,10 @@ namespace Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(!validateFieldsForItem())
+            {
+                return;
+            }
             dgvStatItems.Columns[0].Name = "Ime igraca";
             dgvStatItems.Columns[1].Visible = false;
             dgvStatItems.Columns[2].Visible = false;
@@ -87,6 +91,8 @@ namespace Forme
             };
 
             statItems.Add(si);
+            txtName.Clear();
+            txtName.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -97,6 +103,11 @@ namespace Forme
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if(statItems.Count == 0)
+            {
+                MessageBox.Show("Morate uneti bar 1 stavku statistike");
+                return;
+            }
             bool success = gc.saveAllStats(statItems.ToList());
             if (success)
             {
@@ -105,6 +116,27 @@ namespace Forme
             {
                 MessageBox.Show("Dogodila se greska, molimo vas pokusajte ponovo");
             }
+        }
+
+        private bool validateFieldsForItem()
+        {
+            bool valid = true;
+            string errMsg = "";
+            if (String.IsNullOrWhiteSpace(txtName.Text))
+            {
+                errMsg += "Morate uneti naziv stavke statistike" + '\n';
+                valid = false;
+            }
+            if (String.IsNullOrWhiteSpace(txtValue.Text))
+            {
+                errMsg += "Morate uneti vrednost stavke statistike" + '\n';
+                valid = false;
+            }
+            if (!valid)
+            {
+                MessageBox.Show(errMsg);
+            }
+            return valid;
         }
     }
 }

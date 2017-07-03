@@ -116,7 +116,10 @@ namespace Forme
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            if(homeTeamPlayers.Count == 0 || guestTeamPlayers.Count == 0)
+            {
+                MessageBox.Show("Morate uneti bar 1 igraca i za domacine i za goste");
+            }
             bool res = gc.insertGame(homeTeam.TeamID.ToString(), guestTeam.TeamID.ToString(), ptsHome, ptsGuest, date, homeTeamPlayers.ToList(), guestTeamPlayers.ToList());
             if(res)
             {

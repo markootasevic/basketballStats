@@ -204,7 +204,7 @@ namespace Server
                                 {
                                     Player p = db.Players.Include("Stats").FirstOrDefault(pl => pl.PlayerID == pf.PlayerID);
                                     Stat s = db.Stats.FirstOrDefault(st => st.PlayerID == p.PlayerID && st.GameID == game.GameID);
-                                    if(s != null)
+                                    if (s != null)
                                     {
                                         res.Add(p);
                                     }
@@ -219,7 +219,7 @@ namespace Server
                             using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 List<StatsItem> list = transfer.TransferObject as List<StatsItem>;
-                                foreach(var si in list)
+                                foreach (var si in list)
                                 {
                                     db.StatsItems.Add(si);
                                 }
@@ -235,11 +235,11 @@ namespace Server
                             }
                             break;
 
-                        case ((int) Operations.Search_player):
+                        case ((int)Operations.Search_player):
                             using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 string name = transfer.TransferObject as string;
-                                List<Player> players = db.Players.Include("Country").Include("PlaysFors").Where(p => p.Name.Contains(name)).ToList();
+                                List<Player> players = db.Players.Include("Country").Include("PlaysFors").Where(p => p.Name.ToLower().Contains(name.ToLower())).ToList();
                                 for (int i = 0; i < players.Count; i++)
                                 {
                                     int pId = players[i].PlayerID;
@@ -256,26 +256,27 @@ namespace Server
                             {
                                 GameFilter gf = transfer.TransferObject as GameFilter;
                                 List<Game> games = db.Games.Include("Team").Include("Team1").ToList();
-                                if(gf.DateFrom != null)
+                                if (gf.DateFrom != null)
                                 {
                                     DateTime date = DateTime.Parse(gf.DateFrom.ToString());
                                     games = games.Where(g => DateTime.Compare(g.Date, date) >= 0).ToList();
                                 }
-                                if(gf.DateTo != null)
+                                if (gf.DateTo != null)
                                 {
                                     DateTime date = DateTime.Parse(gf.DateTo.ToString());
                                     games = games.Where(g => DateTime.Compare(g.Date, date) <= 0).ToList();
                                 }
-                                if(gf.AllTeams != null)
+                                if (gf.AllTeams != null)
                                 {
                                     games = games.Where(g => g.HomeTeamID == gf.AllTeams.TeamID || g.GuestTeamID == gf.AllTeams.TeamID).ToList();
-                                } else
+                                }
+                                else
                                 {
-                                    if(gf.HomeTeam != null)
+                                    if (gf.HomeTeam != null)
                                     {
                                         games = games.Where(g => g.HomeTeamID == gf.HomeTeam.TeamID).ToList();
                                     }
-                                    if(gf.GuestTeam != null)
+                                    if (gf.GuestTeam != null)
                                     {
                                         games = games.Where(g => g.GuestTeamID == gf.GuestTeam.TeamID).ToList();
                                     }
@@ -284,14 +285,14 @@ namespace Server
                                 transfer.TransferObject = games;
                                 formatter.Serialize(stream, transfer);
                             }
-                                break;
+                            break;
 
                         case ((int)Operations.Search_stats):
                             using (basketballStatsEntities db = new basketballStatsEntities("a"))
                             {
                                 Player player = transfer.TransferObject as Player;
-                                List<Stat> statsList= db.Stats.Include("Game").Include("Player").Include("StatsItems").Where(s => s.PlayerID == player.PlayerID).ToList();
-                                foreach(var stat in statsList)
+                                List<Stat> statsList = db.Stats.Include("Game").Include("Player").Include("StatsItems").Where(s => s.PlayerID == player.PlayerID).ToList();
+                                foreach (var stat in statsList)
                                 {
                                     Game game = db.Games.Include("Team1").Include("Team").FirstOrDefault(g => g.GameID == stat.GameID);
                                     stat.Game = game;
@@ -325,6 +326,39 @@ namespace Server
                                 transfer.TransferObject = teamList;
                                 formatter.Serialize(stream, transfer);
                             }
+
+                            break;
+
+                        case ((int)Operations.Update_team):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                Team team = transfer.TransferObject as Team;
+                                Team dbTeam = db.Teams.FirstOrDefault(t => t.TeamID == team.TeamID);
+                                dbTeam.Arena = team.Arena;
+                                dbTeam.Name = team.Name;
+                                db.SaveChanges();
+                            }
+                            break;
+
+                        case ((int)Operations.Update_player):
+                            using (basketballStatsEntities db = new basketballStatsEntities("a"))
+                            {
+                                Player player = transfer.TransferObject as Player;
+                                Player dbPlayer = db.Players.Include("PlaysFors").FirstOrDefault(p => p.PlayerID == player.PlayerID);
+                                if(player.PlaysFors.Count != dbPlayer.PlaysFors.Count)
+                                {
+                                    PlaysFor pf = db.PlaysFors.OrderByDescending(a => a.DateFrom).First();
+                                    pf.DateTo = DateTime.Now;
+                                    db.PlaysFors.Add(player.PlaysFors.Last());
+                                }
+                                dbPlayer.Height = player.Height;
+                                dbPlayer.Weight = player.Weight;
+                                dbPlayer.CountyID = player.CountyID;
+                                dbPlayer.BirthDate = player.BirthDate;
+                                dbPlayer.Name = player.Name;
+                                db.SaveChanges();
+                            }
+
 
                             break;
                         case ((int)Operations.End):

@@ -22,6 +22,19 @@ namespace Domain
         {
             return Name;
         }
+        public override bool Equals(object obj)
+        {
+            Country c = obj as Country;
+            if(c == null)
+            {
+                return false;
+            }
+            if(this.CountryID == c.CountryID)
+            {
+                return true;
+            }
+            return false;
+        }
     }
     [Serializable]
     partial class Game
